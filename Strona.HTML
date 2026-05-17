@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Importu Aut z USA</title>
+    <!-- Tu w przyszłości podepniemy plik CSS -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>Kalkulator Kosztów Importu USA</h1>
+        <p>Oszacuj całkowity koszt sprowadzenia pojazdu do Polski</p>
+    </header>
+
+    <main class="calculator-container">
+        <!-- Sekcja Formularza -->
+        <section class="calculator-form">
+            <h2>Dane pojazdu i aukcji</h2>
+            
+            <div class="form-group">
+                <label for="carModel">Marka i model pojazdu:</label>
+                <input type="text" id="carModel" placeholder="np. Ford Mustang" required>
+            </div>
+
+            <div class="form-group">
+                <label for="auctionPrice">Cena na aukcji (USD):</label>
+                <input type="number" id="auctionPrice" min="0" placeholder="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="engineCapacity">Pojemność silnika:</label>
+                <select id="engineCapacity">
+                    <option value="low">Do 2.0L (Akcyza 3.1%)</option>
+                    <option value="high">Powyżej 2.0L (Akcyza 18.6%)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destinationPort">Port docelowy (odprawa celna):</label>
+                <select id="destinationPort">
+                    <option value="bremerhaven">Bremerhaven, Niemcy (VAT 19%)</option>
+                    <option value="gdynia">Gdynia, Polska (VAT 23%)</option>
+                </select>
+            </div>
+
+            <button type="button" id="calculateBtn">Oblicz wszystkie koszty</button>
+        </section>
+
+        <!-- Sekcja Wyników (Początkowo puste wartości, które wypełni JS) -->
+        <section class="calculator-results">
+            <h2>Podsumowanie kosztów</h2>
+            
+            <article class="result-item">
+                <span>Wartość pojazdu z aukcji:</span>
+                <span id="resAuctionPrice">0 USD</span>
+            </article>
+
+            <article class="result-item">
+                <span>Szacowany transport (ląd + morze):</span>
+                <span id="resTransport">0 USD</span>
+            </article>
+
+            <article class="result-item">
+                <span>Cło (10%):</span>
+                <span id="resDuty">0 PLN</span>
+            </article>
+
+            <article class="result-item">
+                <span>Akcyza:</span>
+                <span id="resExcise">0 PLN</span>
+            </article>
+
+            <article class="result-item">
+                <span>Podatek VAT:</span>
+                <span id="resVat">0 PLN</span>
+            </article>
+
+            <hr>
+
+            <article class="result-total">
+                <h3>Całkowity szacowany koszt:</h3>
+                <h3 id="resTotalPln">0 PLN</h3>
+            </article>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Projekt zaliczeniowy. Strona ma charakter demonstracyjny.</p>
+    </footer>
+
+    <!-- Tu w przyszłości podepniemy plik JavaScript -->
+    <!-- <script src="script.js"></script> -->
+
+</body>
+</html>
