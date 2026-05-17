@@ -21,19 +21,33 @@ body {
     line-height: 1.6;
 }
 
-/* --- NAGŁÓWEK --- */
+/* --- NAGŁÓWEK (MODERN UI) --- */
 .site-header {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* Nowoczesny, ciemny gradient */
     color: white;
     text-align: center;
-    padding: 2.5rem 1rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 3rem 1rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Głębszy cień */
+    border-bottom: 4px solid var(--accent-color); /* Czerwony pasek akcentujący */
+    border-bottom-left-radius: 20px; /* Zaokrąglenie rogów */
+    border-bottom-right-radius: 20px;
 }
 
-.site-header p {
-    color: #bdc3c7;
-    margin-top: 0.5rem;
+.site-header h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -1px; /* Ciasne ułożenie liter dla nowoczesnego wyglądu */
+    margin-bottom: 0.5rem;
+}
+
+.site-header .subtitle {
+    color: #94a3b8; /* Chłodny, szary odcień */
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1.5px; /* Rozstrzelone litery w podtytule */
+    text-transform: uppercase; /* Wymuszenie wielkich liter */
+    margin-top: 0;
 }
 
 /* --- GŁÓWNY KONTENER (FLEXBOX) --- */
