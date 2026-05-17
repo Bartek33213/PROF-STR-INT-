@@ -157,3 +157,35 @@ hr {
     font-size: 0.9rem;
     color: #7f8c8d;
 }
+
+/* --- STYLE SPECJALNIE DO GENEROWANIA PDF (DRUKU) --- */
+@media print {
+    /* Ukrywamy wszystko, czego nie chcemy w pliku PDF */
+    body, .site-header, .calculator-form, .site-footer, #downloadPdfBtn {
+        display: none !important;
+    }
+
+    /* Pokazujemy i formatujemy tylko sekcję z wynikami */
+    .calculator-container {
+        display: block !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .calculator-results {
+        display: block !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: white !important;
+        color: #000 !important;
+    }
+
+    /* Upewniamy się, że blok z danymi auta jest widoczny w PDF */
+    #pdfCarDetails {
+        display: block !important;
+        background: #f8f9fa !important;
+        border-left: 5px solid #e74c3c !important;
+    }
+}

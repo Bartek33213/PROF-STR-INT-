@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculateBtn');
-    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-    const pdfArea = document.getElementById('pdfArea');
 
     calculateBtn.addEventListener('click', async function() {
         
+        // 1. POBRANIE DANYCH Z FORMULARZA
         const priceInput = document.getElementById('auctionPrice').value;
         const priceUSD = parseFloat(priceInput);
         
@@ -13,12 +12,22 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const engine = document.getElementById('engineCapacity').value;
-        const port = document.getElementById('destinationPort').value;
-        const usLocation = document.getElementById('usLocation').value;
+        const carModelText = document.getElementById('carModel').value || "Brak nazwy pojazdu";
         const isDamaged = document.getElementById('isDamaged').checked;
+
+        const engineSelect = document.getElementById('engineCapacity');
+        const engine = engineSelect.value;
+        const engineText = engineSelect.options[engineSelect.selectedIndex].text;
+
+        const usLocationSelect = document.getElementById('usLocation');
+        const usLocation = usLocationSelect.value;
+        const usLocationText = usLocationSelect.options[usLocationSelect.selectedIndex].text.split(' -')[0];
+
+        const portSelect = document.getElementById('destinationPort');
+        const port = portSelect.value;
+        const portText = portSelect.options[portSelect.selectedIndex].text.split(',')[0];
         
-        // POBIERANIE KURSU Z API NBP
+        // 2. POBIERANIE KURSU Z API NBP
         let liveUsdRate = 4.05; 
         try {
             calculateBtn.textContent = "Pobieranie kursu...";
@@ -35,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const fixedSpread = 0.03; 
         const effectiveUsdRate = liveUsdRate + (liveUsdRate * fixedSpread);
 
-        // KOSZTY LOGISTYCZNE I DODATKOWE
+        // 3. KOSZTY LOGISTYCZNE I DODATKOWE
         let landTransportUSD = 400; 
         if (usLocation === 'central') landTransportUSD = 700;
         if (usLocation === 'west') landTransportUSD = 1000;
@@ -47,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const brokerUSD = 200; 
         const commissionUSD = Math.max(priceUSD * 0.05, 300); 
 
-        // RZECZOZNAWCA I PODATKI
+        // 4. RZECZOZNAWCA I PODATKI
         const appraiserPLN = isDamaged ? 400 : 0;
         const acceptedCarValueUSD = isDamaged ? (priceUSD * 0.70) : priceUSD;
 
@@ -62,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const vatRate = (port === 'bremerhaven') ? 0.19 : 0.23;
         const vatUSD = baseForVatUSD * vatRate;
 
-        // PRZELICZENIE NA PLN
+        // 5. PRZELICZENIE NA PLN
         const dutyPln = dutyUSD * effectiveUsdRate;
         const excisePln = exciseUSD * effectiveUsdRate;
         const vatPln = vatUSD * effectiveUsdRate;
@@ -70,7 +79,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalPhysicalCostsUsdToPln = (priceUSD + commissionUSD + totalTransportUSD + thcUSD + brokerUSD) * effectiveUsdRate;
         const totalPln = totalPhysicalCostsUsdToPln + dutyPln + excisePln + vatPln + appraiserPLN;
 
-        // AKTUALIZACJA STRONY (DOM)
+        // --- AKTUALIZACJA STRONY (DOM) ---
+        const damageText = isDamaged ? "Uwzględniono opinię (-30% wartości celnej)" : "Auto pełnowartościowe (brak opinii)";
+        
+        document.getElementById('resCarModel').textContent = carModelText;
+        document.getElementById('resEngine').textContent = engineText;
+        document.getElementById('resRoute').textContent = `${usLocationText} ➔ ${portText}`;
+        document.getElementById('resDamageStatus').textContent = damageText;
+        
+        document.getElementById('pdfCarDetails').style.display = 'block';
+
         const formatCurrency = (amount, currency) => `${amount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
 
         document.getElementById('resExchangeRate').textContent = formatCurrency(effectiveUsdRate, 'PLN (w tym 3% spreadu)');
@@ -82,29 +100,5 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('resExcise').textContent = formatCurrency(excisePln, 'PLN');
         document.getElementById('resVat').textContent = formatCurrency(vatPln, 'PLN');
         document.getElementById('resTotalPln').textContent = formatCurrency(totalPln, 'PLN');
-
-        // Pokaż przycisk do PDF po zakończeniu obliczeń
-        downloadPdfBtn.style.display = 'block';
-    });
-
-    // NOWA FUNKCJA: Generowanie PDF
-    downloadPdfBtn.addEventListener('click', function() {
-        // Ukrywamy przycisk na czas robienia zrzutu, żeby nie było go w PDFie
-        downloadPdfBtn.style.display = 'none';
-        
-        // Ustawienia dokumentu
-        const opt = {
-            margin:       10,
-            filename:     'Wycena_Importu_USA.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        // Wywołanie biblioteki na naszym obszarze wyników
-        html2pdf().set(opt).from(pdfArea).save().then(() => {
-            // Po zapisaniu przywracamy przycisk
-            downloadPdfBtn.style.display = 'block';
-        });
     });
 });

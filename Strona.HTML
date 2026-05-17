@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator Importu Aut z USA</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Biblioteka do generowania PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
-  <header class="site-header">
+    <header class="site-header">
         <h1>🇺🇸 Kalkulator Importu USA</h1>
         <p class="subtitle">Profesjonalne szacowanie kosztów sprowadzenia pojazdu</p>
     </header>
 
     <main class="calculator-container">
-        <!-- Sekcja Formularza -->
         <section class="calculator-form">
             <h2>Dane pojazdu i aukcji</h2>
             
@@ -64,9 +61,18 @@
             <button type="button" id="calculateBtn">Oblicz wszystkie koszty</button>
         </section>
 
-        <!-- Sekcja Wyników (oznaczona id="pdfArea" do wydruku) -->
-        <section class="calculator-results" id="pdfArea">
+        <section class="calculator-results">
             <h2>Podsumowanie kosztów</h2>
+
+            <div id="pdfCarDetails" style="display: none; background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 5px solid var(--accent-color);">
+                <h3 style="margin-top: 0; font-size: 1.1rem; color: var(--primary-color); margin-bottom: 1rem;">Szczegóły wyceny:</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.8;">
+                    <li><strong>Pojazd:</strong> <span id="resCarModel">-</span></li>
+                    <li><strong>Pojemność silnika:</strong> <span id="resEngine">-</span></li>
+                    <li><strong>Trasa transportu:</strong> <span id="resRoute">-</span></li>
+                    <li><strong>Status rzeczoznawcy:</strong> <span id="resDamageStatus">-</span></li>
+                </ul>
+            </div>
 
             <article class="result-item" style="color: #2980b9;">
                 <span>Kurs USD (API NBP):</span>
@@ -114,9 +120,6 @@
                 <h3>Całkowity koszt ("pod dom"):</h3>
                 <h3 id="resTotalPln">0 PLN</h3>
             </article>
-
-            <!-- Przycisk PDF (ukryty do momentu obliczeń) -->
-            <button type="button" id="downloadPdfBtn" style="display: none; background-color: #27ae60; margin-top: 2rem; width: 100%; padding: 1rem; color: white; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;">Pobierz wycenę (PDF)</button>
         </section>
     </main>
 
