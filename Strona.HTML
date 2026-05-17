@@ -36,6 +36,16 @@
                 </select>
             </div>
 
+            <!-- NOWE: Lokalizacja w USA -->
+            <div class="form-group">
+                <label for="usLocation">Lokalizacja portu wysyłki w USA:</label>
+                <select id="usLocation">
+                    <option value="east">Wschodnie Wybrzeże (np. Nowy Jork) - najtańszy transport lądowy</option>
+                    <option value="central">Środkowy Zachód (np. Teksas) - średni koszt</option>
+                    <option value="west">Zachodnie Wybrzeże (np. Los Angeles) - najdroższy transport lądowy</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="destinationPort">Port docelowy (odprawa celna):</label>
                 <select id="destinationPort">
@@ -43,28 +53,45 @@
                     <option value="gdynia">Gdynia, Polska (VAT 23%)</option>
                 </select>
             </div>
-           
+
+            <!-- NOWE: Opcja rzeczoznawcy -->
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 1.5rem;">
+                <input type="checkbox" id="isDamaged" style="width: auto; transform: scale(1.3); cursor: pointer;">
+                <label for="isDamaged" style="margin: 0; cursor: pointer;">Auto uszkodzone (dołącz opinię rzeczoznawcy PZM)</label>
+            </div>
+            <small style="color: #7f8c8d; display: block; margin-bottom: 1rem;">Obniża wartość celną auta o 30%. Koszt opinii to 400 PLN.</small>
 
             <button type="button" id="calculateBtn">Oblicz wszystkie koszty</button>
         </section>
 
-        <!-- Sekcja Wyników (Początkowo puste wartości, które wypełni JS) -->
+        <!-- Sekcja Wyników -->
         <section class="calculator-results">
             <h2>Podsumowanie kosztów</h2>
-            
+
             <article class="result-item" style="color: #2980b9;">
-                <span>Zastosowany kurs USD (NBP + spread):</span>
+                <span>Kurs USD (API NBP):</span>
                 <span id="resExchangeRate">Pobieranie...</span>
             </article>
-
+            
             <article class="result-item">
-                <span>Wartość pojazdu z aukcji:</span>
+                <span>Wartość auta z aukcji:</span>
                 <span id="resAuctionPrice">0 USD</span>
             </article>
 
+            <!-- NOWE WYNIKI LOGISTYKI -->
             <article class="result-item">
-                <span>Szacowany transport (ląd + morze):</span>
-                <span id="resTransport">0 USD</span>
+                <span>Transport USA + Fracht morski:</span>
+                <span id="resTransportLogistics">0 USD</span>
+            </article>
+
+            <article class="result-item">
+                <span>Rozładunek (THC) i Agencja Celna:</span>
+                <span id="resPortBroker">0 USD</span>
+            </article>
+
+            <article class="result-item">
+                <span>Opinia rzeczoznawcy PZM:</span>
+                <span id="resAppraiser">0 PLN</span>
             </article>
 
             <article class="result-item">
@@ -85,7 +112,7 @@
             <hr>
 
             <article class="result-total">
-                <h3>Całkowity szacowany koszt:</h3>
+                <h3>Całkowity koszt ("pod dom"):</h3>
                 <h3 id="resTotalPln">0 PLN</h3>
             </article>
         </section>
@@ -95,6 +122,6 @@
         <p>Projekt zaliczeniowy. Strona ma charakter demonstracyjny.</p>
     </footer>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
