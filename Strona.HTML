@@ -43,6 +43,7 @@
                     <option value="gdynia">Gdynia, Polska (VAT 23%)</option>
                 </select>
             </div>
+           
 
             <button type="button" id="calculateBtn">Oblicz wszystkie koszty</button>
         </section>
@@ -51,6 +52,11 @@
         <section class="calculator-results">
             <h2>Podsumowanie kosztów</h2>
             
+            <article class="result-item" style="color: #2980b9;">
+                <span>Zastosowany kurs USD (NBP + spread):</span>
+                <span id="resExchangeRate">Pobieranie...</span>
+            </article>
+
             <article class="result-item">
                 <span>Wartość pojazdu z aukcji:</span>
                 <span id="resAuctionPrice">0 USD</span>
